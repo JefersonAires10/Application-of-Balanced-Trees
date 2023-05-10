@@ -6,6 +6,38 @@
 using namespace std;
 
 template <typename T>
+Node<T>* avl_tree<T>::search(T key) {
+    return search(root, key);
+}
+template <typename T>
+Node<T>* avl_tree<T>::search(Node<T> *node, T key) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+    if (node->key == key) {
+        return node;
+    }
+    if (key < node->key) {
+        return search(node->left, key);
+    }
+    return search(node->right, key);
+}
+template <>
+Node<string>* avl_tree<string>::search(Node<string> *node, string key) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+    if (node->key == key) {
+        return node;
+    }
+    if (key < node->key) {
+        return search(node->left, key);
+    }
+    return search(node->right, key);
+}
+
+
+template <typename T>
 int avl_tree<T>::height(Node<T> *node) {
     return (node == nullptr) ? 0 : node->height;
 }

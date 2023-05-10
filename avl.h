@@ -17,16 +17,19 @@ public:
     ~avl_tree();
 
     void add(T key);                                 // O(lg n)
+    Node<T>* search(T key);                          // O(lg n)
     void clear();                                    // O(n)
     void remove(T key);                              // O(lg n)
     void access_keys_inorder(void (*f)(T& key));      // O(n)
     void keys_as_vector(std::vector<T>& v) const;     // O(n)
+
                         
 private:
     Node<T> *root {nullptr};            
 
     int height(Node<T> *node);
     int balance(Node<T> *node);
+    Node<T>* search(Node<T> *node, T key);
     Node<T>* rightRotation(Node<T> *p);
     Node<T>* leftRotation(Node<T> *p);
     Node<T>* add(Node<T> *p, T key);

@@ -11,20 +11,21 @@
 
 class Pessoa {
 public:
-    int Cpf;
+    std::string Cpf;
     std::string Nome;
     Date data_nascimento;
     
     Pessoa() = default;
-    Pessoa(int cpf, std::string nome, Date data_nascimento);
-    int getCpf();
+    Pessoa(std::string cpf, std::string nome, Date data_nascimento);
+    std::string getCpf();
     std::string getNome();
     Date getDataNascimento();
 
-    void setCpf(int cpf);
+    void setCpf(std::string cpf);
     void setNome(std::string nome);
     void setdataNascimento(Date data_nascimento);
 
+    static Pessoa fromString(const std::string& line);
 };
 
 #endif //PESSOA_H

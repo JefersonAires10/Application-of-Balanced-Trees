@@ -34,35 +34,65 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
 
         stringstream ss2(data);
         int dia, mes, ano;
-        ss >> dia;
-        ss.ignore(1);
-        ss >> mes;
-        ss.ignore(1);
-        ss >> ano;
+        ss2 >> dia;
+        ss2.ignore(1);
+        ss2 >> mes;
+        ss2.ignore(1);
+        ss2 >> ano;
         Date dataDeNascimento(dia, mes, ano);
 
-        if (dataDeNascimento == Date(0, 0, 0)) {
-            cout << "Data inválida: " << data << endl;
-            continue;
-        }
-
-        if  (cpf.size() != 11) {
-            cout << "CPF inválido: " << cpf << endl;
-            continue;
-        }
-
-        Pessoa pessoa(stoll(cpf), nome + " " + sobrenome, dataDeNascimento);
+        Pessoa pessoa(cpf, nome + " " + sobrenome, dataDeNascimento);
         pessoas.push_back(pessoa);
 
-        ss.clear();
-        ss2.clear();
+    }
+
+}
+
+void preencherArvores_Cpf (avl_tree<string> &Cpf, vector<Pessoa> &pessoas) {
+    for (int i = 0; i < pessoas.size(); i++) {  
+        Cpf.add(pessoas[i].getCpf());
     }
 }
-void preencherArvores(avl_tree<int> &Cpf, avl_tree<string> &Nome, avl_tree<Date> &data_nascimento, vector<Pessoa> &pessoas) {
+
+void preencherArvores_Nome (avl_tree<string> &Nome, vector<Pessoa> &pessoas) {
     for (int i = 0; i < pessoas.size(); i++) {
-        Cpf.add(pessoas[i].getCpf());
         Nome.add(pessoas[i].getNome());
+    }
+}
+
+void preencherArvores_Data (avl_tree<Date> &data_nascimento, vector<Pessoa> &pessoas) {
+    for (int i = 0; i < pessoas.size(); i++) {
         data_nascimento.add(pessoas[i].getDataNascimento());
+    }
+}
+
+// Consultar uma única pessoa pelo seu CPF e exibir seus dados na tela.
+void consultaporCpf(avl_tree<string> &Cpf, avl_tree<string>&Nome, avl_tree<Date>&data_nascimento, const string& cpf) {
+    if (Cpf.search(cpf) != nullptr) {
+        Node<string>* node = Cpf.search(cpf);
+        string pessoaStr = node->key;
+        Pessoa pessoa = Pessoa::fromString(pessoaStr);
+
+        Node<string>* nodeNome = Nome.search(pessoa.getNome());
+        if (nodeNome != nullptr) {
+            string nomeStr = nodeNome->key;
+            pessoa.setNome(nomeStr
+            );
+        }
+        Node<Date>* nodeData = data_nascimento.search(pessoa.getDataNascimento());
+        if (nodeData != nullptr) {
+            Date data = nodeData->key;
+            pessoa.setdataNascimento(data);
+        }
+        if (nodeNome == nullptr || nodeData == nullptr) {
+            cout << "Dados incompletos." << endl;
+        }
+        cout << "Nome: " << pessoa.getNome() << endl;
+        cout << "CPF: " << pessoa.getCpf() << endl;
+        cout << "Data de Nascimento: " << pessoa.getDataNascimento().strPrint() << endl;
+    }
+    else {
+        cout << "CPF não encontrado." << endl;
     }
 }
 
@@ -74,22 +104,29 @@ int main() {
     vector<Pessoa> pessoas;
     readFile(pessoas, "data.csv");
 
-    avl_tree<int> Cpf;
+    avl_tree<string> Cpf;
     avl_tree<string> Nome;
     avl_tree<Date> data_nascimento;
 
-    preencherArvores(Cpf, Nome, data_nascimento, pessoas);
+    preencherArvores_Cpf(Cpf, pessoas);
+    preencherArvores_Nome(Nome, pessoas);   
+    preencherArvores_Data(data_nascimento, pessoas);
 
-    cout << "Arvore de CPFs: " << endl;
+    string cpf_consulta;
+    cout << "Digite o CPF da pessoa que deseja consultar: ";
+    cin >> cpf_consulta;
+    consultaporCpf(Cpf, Nome, data_nascimento, cpf_consulta);
+    
+    /*cout << "Arvore de CPFs: " << endl;
     Cpf.bshow();
     cout << endl;
 
     cout << "Arvore de Nomes: " << endl;
     Nome.bshow();
-    cout << endl;
+    cout << endl; 
 
     cout << "Arvore de Datas de Nascimento: " << endl;
     data_nascimento.bshow();
-    cout << endl;
+    cout << endl;*/ 
 
 }
