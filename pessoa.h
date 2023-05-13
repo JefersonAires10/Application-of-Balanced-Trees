@@ -1,31 +1,27 @@
 #ifndef PESSOA_H
 #define PESSOA_H
-#include <vector>
 #include <string>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include "data.h"
-#include "node.h"   
-#include "avl.h"
+#include "Data.h"
 
 class Pessoa {
-public:
-    std::string Cpf;
-    std::string Nome;
-    Date data_nascimento;
+    private:
+        std::string cpf;
+        std::string nome;
+        Date dataDeNascimento;
     
-    Pessoa() = default;
-    Pessoa(std::string cpf, std::string nome, Date data_nascimento);
-    std::string getCpf();
-    std::string getNome();
-    Date getDataNascimento();
+    public:
+        Pessoa() = default; // Construtor padrão
+        // Construtor
+        Pessoa(std::string cpf, std::string nome, Date dataDeNascimento) : cpf(cpf), nome(nome), dataDeNascimento(dataDeNascimento) {}
 
-    void setCpf(std::string cpf);
-    void setNome(std::string nome);
-    void setdataNascimento(Date data_nascimento);
+        // Getters e Setters
+        std::string getCpf() { return this->cpf; }
+        void setCpf(int novoCpf) { this->cpf = novoCpf; }
+        std::string getNome() { return this->nome; }
+        void setNome(std::string novoNome) { this->nome = novoNome; }
+        Date getDataNascimento() { return this->dataDeNascimento; }
+        void setDataNascimento(Date novaData) { this->dataDeNascimento = novaData; }
 
-    static Pessoa fromString(const std::string& line);
 };
 
-#endif //PESSOA_H
+#endif // PESSOA_H
