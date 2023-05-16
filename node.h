@@ -15,6 +15,13 @@ struct Node {
         : key(key), height(height), left(left), right(right), pessoa(pessoa)
     {
     }
+
+    // Sobrecarga do construtor
+    Node (T key, Pessoa *pessoa)
+        : key(key), height(1), left(nullptr), right(nullptr), pessoa(pessoa)
+    {
+    }
+
 };
 
 #endif 

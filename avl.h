@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
 #include "node.h"
 #include "data.h"
 #include "pessoa.h"
@@ -26,8 +25,8 @@ public:
     void bshow() const { bshow(root, ""); }
     ~avl_tree() { clear(); }
 
-    void add(T key) { root = add(root, key); }                                 // O(lg n)
-    void clear() { root = clear(root); }                                  // O(n)
+    void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }                                 // O(lg n)
+    void clear() { root = clear(root); }                                          // O(n)
     void remove(T key) { root = remove(root,key); }                              // O(lg n)
 
     Node<T>* search(T key) { return search(root, key); }                          // O(lg n)
@@ -37,15 +36,20 @@ public:
         Node<T> *nodeCpf = search(key);
         if(nodeCpf != nullptr) {
             Pessoa *pessoa = nodeCpf->pessoa;
-            cout << "Endereço de cpf: " << nodeCpf << endl;
             cout << "CPF: " << nodeCpf->key << endl;
-            cout << "Pessoa: " << pessoa << endl;
-            //cout << "Nome: " << pessoa->key << endl;
-            //cout << "Nome: " << pessoa->getNome() << endl;
-            //cout << "Data de nascimento: " << nodeCpf->pessoa.getDataNascimento().getDia() << "/" << nodeCpf->pessoa.getDataNascimento().getMes() << "/" << nodeCpf->pessoa.getDataNascimento().getAno() << endl;
+            cout << "Nome: " << pessoa->getNome() << endl;
+            cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
         }
         else {
             cout << "CPF não encontrado!" << endl;
+        }
+    }
+
+    void searchName(const avl_tree<T>& arvoreNome, T key) {
+        Node<T>* nodeNome = search(key);
+        if (nodeNome != nullptr) {
+            Pessoa* pessoa = nodeNome->pessoa;
+            
         }
     }
 
@@ -86,15 +90,15 @@ private:
         return u;
     }
 
-    Node<T>* add(Node<T> *p, T key) {
+    Node<T>* add(Node<T> *p, T key, Pessoa *pessoa) {
         if(p == nullptr)
-            return new Node<T>(key);
+            return new Node<T>(key, pessoa);
         if(key == p->key) 
             return p;
         if(key < p->key)
-            p->left = add(p->left, key);
+            p->left = add(p->left, key, pessoa);
         else 
-            p->right = add(p->right, key);
+            p->right = add(p->right, key, pessoa);
         
         p = fixup_node(p, key);
 

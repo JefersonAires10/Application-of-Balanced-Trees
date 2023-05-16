@@ -25,11 +25,11 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
         getline(ss, data, ',');
         getline(ss, cidade, ',');
 
-        for (int i = 0; i < cpf.size(); i++) {
+        /*for (int i = 0; i < cpf.size(); i++) {
             if (cpf[i] == '.' || cpf[i] == '-') {
                 cpf.erase(i--, 1);
             }
-        }
+        }*/
 
         stringstream ss2(data);
         int dia, mes, ano;
@@ -48,9 +48,9 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
 
 void preencherArvores(avl_tree<string> &Cpf, avl_tree<string> &Nome, avl_tree<Date> &data_nascimento, vector<Pessoa> &pessoas) {
     for (int i = 0; i < pessoas.size(); i++) {
-        Cpf.add(pessoas[i].getCpf());
-        Nome.add(pessoas[i].getNome());
-        data_nascimento.add(pessoas[i].getDataNascimento());
+        Cpf.add(pessoas[i].getCpf(), &pessoas[i]);
+        Nome.add(pessoas[i].getNome(), &pessoas[i]);
+        data_nascimento.add(pessoas[i].getDataNascimento(), &pessoas[i]);
     }
 }
 
@@ -72,7 +72,7 @@ int main() {
     Cpf.bshow();
     cout << endl;*/
     
-    Cpf.searchCpf(Cpf, "99795525140");
+    Cpf.searchCpf(Cpf, "607.941.973-45");
 
 
     /*cout << "Arvore de Nomes: " << endl;
