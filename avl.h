@@ -31,7 +31,7 @@ public:
 
     Node<T>* search(T key) { return search(root, key); }                          // O(lg n)
     
-    // Consultar uma ´unica pessoa pelo seu CPF e exibir seus dados na tela
+    // Consultar uma única pessoa pelo seu CPF e exibir seus dados na tela
     void searchCpf(const avl_tree<T>& arvoreCpf, T key) {
         Node<T> *nodeCpf = search(key);
         if(nodeCpf != nullptr) {
@@ -44,13 +44,32 @@ public:
             cout << "CPF não encontrado!" << endl;
         }
     }
-
+    // Consultar todas as pessoas cujo nome comece com uma string informada pelo
+    // usuário e exibir na tela todos os dados dessas pessoas na forma de lista.
     void searchName(const avl_tree<T>& arvoreNome, T key) {
         Node<T>* nodeNome = search(key);
-        if (nodeNome != nullptr) {
-            Pessoa* pessoa = nodeNome->pessoa;
-            
+        if (nodeNome == nullptr) {
+            return;
         }
+        if (nodeNome->left) {
+            if (key == predecessor(nodeNome)->key) {
+                searchName(arvoreNome, nodeNome->left->key);
+            }
+        }
+        cout << "Nome: " << nodeNome->key << endl;
+        Pessoa *pessoa = nodeNome->pessoa;
+        cout << "CPF: " << pessoa->getCpf() << endl;
+        cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
+
+        if (nodeNome->right) {
+            if (key == sucessor(nodeNome)->key) {
+                searchName(arvoreNome, nodeNome->right->key);        
+            }
+        }
+        cout << "Nome: " << nodeNome->key << endl;
+        Pessoa *pessoa = nodeNome->pessoa;
+        cout << "CPF: " << pessoa->getCpf() << endl;
+        cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
     }
 
 private:
@@ -60,7 +79,60 @@ private:
     
     int balance(Node<T> *node) { return height(node->right) - height(node->left); } 
 
+    Node<T>* minimum(Node<T> *node) {
+        Node<T> *aux = root;
+        while (aux != nullptr && aux->left != nullptr) {
+            if (aux->left == nullptr) { return aux; }
+            else { aux = aux->left; }
+        }
+        return aux;
+    }
+
+    Node<T>* maximum(Node<T> *node) {
+        Node<T> *aux = root;
+        while (aux != nullptr && aux->right != nullptr) {
+            if (aux->right == nullptr) { return aux; }
+            else { aux = aux->right; }
+        }
+        return aux;
+    }
+
+    Node<T>* sucessor(Node<T> *node) {
+        if (node == nullptr) { return nullptr; } // se o nó não existir, não tem sucessor 
+
+        if (node->right != nullptr) {
+            Node<T> *minNode = node->right;
+            while (minNode != nullptr && minNode->left != nullptr) {
+                if (minNode->left == nullptr) { return minNode; }
+                else { minNode = minNode->left; }
+            }
+        return minNode;
+        }
+        Node<T> *auxNode = root; // para percorrer a árvore
+        Node<T> *aux = nullptr; // nó auxiliar
+        while ( auxNode != node ) {
+            // encontrando o menor antes
+            if (auxNode->key < node->key) { auxNode = auxNode->right; }
+            else { aux = auxNode; auxNode = auxNode->left; }
+        }
+        return aux;
+    }
+
+    Node<T>* predecessor(Node<T> *node) {
+        // função oposta a função anterior
+        if (node == nullptr) { return nullptr; } // se o nó não existir
     
+        // mesma lógica da função anterior, buscando o antecessor
+        Node<T> *auxNode = root; // para percorrer a árvore
+        Node<T> *aux = nullptr; // nó auxiliar
+        while ( auxNode != node ) {
+            // encontrando o menor antes
+            if (auxNode->key > node->key) { auxNode = auxNode->left; }
+            else { aux = auxNode; auxNode = auxNode->right; }
+        }
+        return aux;
+    }
+
     Node<T>* search(Node<T> *p, T key) {
         if(p == nullptr || p->key == key)
             return p;
