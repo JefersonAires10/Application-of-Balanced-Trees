@@ -33,9 +33,9 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
 
         stringstream ss2(data);
         int dia, mes, ano;
-        ss2 >> dia;
-        ss2.ignore(1);
         ss2 >> mes;
+        ss2.ignore(1);
+        ss2 >> dia;
         ss2.ignore(1);
         ss2 >> ano;
         Date dataDeNascimento(dia, mes, ano);
@@ -62,6 +62,8 @@ int main() {
     vector<Pessoa> pessoas;
     readFile(pessoas, "data.csv");
 
+    //cout << "Tamanho do arquivo: " << pessoas.size() << endl;
+
     avl_tree<string> Cpf;
     avl_tree<string> Nome;
     avl_tree<Date> data_nascimento;
@@ -72,14 +74,14 @@ int main() {
     Cpf.bshow();
     cout << endl;*/
     
-    Cpf.searchCpf(Cpf, "607.941.973-45");
-
+    Cpf.searchCpf(Cpf, "501.882.855-20");
+    Nome.searchName(Nome, "A");
 
     /*cout << "Arvore de Nomes: " << endl;
     Nome.bshow();
     cout << endl;
-
-    cout << "Arvore de Datas de Nascimento: " << endl;
+    */
+    /*cout << "Arvore de Datas de Nascimento: " << endl;
     data_nascimento.bshow();
     cout << endl;*/
 
