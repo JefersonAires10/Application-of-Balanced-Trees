@@ -4,11 +4,13 @@
 template<typename T>
 struct Node {
     // atributos
-    T key;
-    int height;
-    Node<T> *left;
-    Node<T> *right;
-    Pessoa *pessoa;
+    T key; // chave do nó
+    int height; // altura do nó
+    Node<T> *left; // ponteiros para filho esquerdo
+    Node<T> *right; // ponteiros para filho direito
+    Pessoa *pessoa; // ponteiro para a pessoa
+
+    std::vector<Pessoa*> sameKey; // vetor para armazenar chaves iguais
     
     // Construtor
     Node (T key, Node<T> *left = nullptr, Node<T> *right = nullptr, int height = 1, Pessoa *pessoa = nullptr)
