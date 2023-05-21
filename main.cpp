@@ -74,13 +74,14 @@ int main() {
     Cpf.bshow();
     cout << endl;*/
     
-    Cpf.searchCpf(Cpf, "501.882.855-20");
-    Nome.searchName(Nome, "A");
+    //Cpf.searchCpf(Cpf, "607.941.973-45");
+    
+    Nome.searchName(Nome, "Amanda");
 
     /*cout << "Arvore de Nomes: " << endl;
     Nome.bshow();
-    cout << endl;
-    */
+    cout << endl;*/
+    
     /*cout << "Arvore de Datas de Nascimento: " << endl;
     data_nascimento.bshow();
     cout << endl;*/
