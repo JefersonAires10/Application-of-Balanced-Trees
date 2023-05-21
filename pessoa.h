@@ -22,6 +22,13 @@ class Pessoa {
         Date& getDataNascimento() { return this->dataDeNascimento; }
         void setDataNascimento(Date novaData) { this->dataDeNascimento = novaData; }
 
+        // função para printar informações da pessoa
+        /*void print(const Pessoa& pessoa) {
+            std::cout << "CPF: " << pessoa.getCpf() << std::endl;
+            std::cout << "Nome: " << pessoa.getNome() << std::endl;
+            std::cout << "Data de nascimento: " << pessoa.getDataNascimento() << std::endl;
+        }*/
+    
 };
 
 #endif // PESSOA_H
