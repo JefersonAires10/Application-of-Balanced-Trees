@@ -27,7 +27,9 @@ public:
 
     void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }                                 // O(lg n)
     void clear() { root = clear(root); }                                          // O(n)
-    void remove(T key) { root = remove(root,key); }                              // O(lg n)
+    void remove(T key) { root = remove(root,key); }                            // O(lg n)
+    void predecessor(T key) { predecessor(root, key); }                        // O(lg n)
+    void sucessor(T key) { sucessor(root, key); }                              // O(lg n)
 
     Node<T>* search(T key) { return search(root, key); }                          // O(lg n)
     
@@ -44,32 +46,40 @@ public:
             cout << "CPF não encontrado!" << endl;
         }
     }
-    // Consultar todas as pessoas cujo nome comece com uma string informada pelo
-    // usuário e exibir na tela todos os dados dessas pessoas na forma de lista.
+
     void searchName(const avl_tree<T>& arvoreNome, T key) {
-        Node<T>* nodeNome = search(key);
+        Node<T>* nodeNome = this->root;
         if (nodeNome == nullptr) {
             return;
         }
-        if (nodeNome->left) {
-            if (key == predecessor(nodeNome)->key) {
+        if (nodeNome != nullptr) {
+            if (nodeNome->key.compare(0, key.length(), key) == 0) {
+                std::cout << nodeNome->key << std::endl;
+                if (nodeNome->sameKey.size() > 0) {
+                    for (int i = 0; i < nodeNome->sameKey.size(); i++) {
+                        Pessoa *pessoa = nodeNome->sameKey[i];
+                        std::cout << "CPF: " << nodeNome->sameKey[i]->getCpf() << std::endl;
+                        std::cout << "Nome: " << pessoa->getNome() << std::endl;
+                        std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
+                    }
+                }
+            }
+
+            if (nodeNome->left != nullptr && key[0] <= nodeNome->left->key[0]) {
                 searchName(arvoreNome, nodeNome->left->key);
             }
-        }
-        cout << "Nome: " << nodeNome->key << endl;
-        Pessoa *pessoa = nodeNome->pessoa;
-        cout << "CPF: " << pessoa->getCpf() << endl;
-        cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
-
-        if (nodeNome->right) {
-            if (key == sucessor(nodeNome)->key) {
-                searchName(arvoreNome, nodeNome->right->key);        
+            
+            else if (nodeNome->right != nullptr && key[0] >= nodeNome->right->key[0]) {
+                searchName(arvoreNome, nodeNome->right->key);
+            }
+            else {
+                searchName(arvoreNome, nodeNome->left->key);
+                searchName(arvoreNome, nodeNome->right->key);
             }
         }
-        cout << "Nome: " << nodeNome->key << endl;
-        Pessoa *pessoa = nodeNome->pessoa;
-        cout << "CPF: " << pessoa->getCpf() << endl;
-        cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
+        else {
+            cout << "Nome não encontrado!" << endl;
+        }
     }
 
 private:
@@ -78,6 +88,8 @@ private:
     int height(Node<T> *node) { return (node == nullptr) ? 0 : node->height; }
     
     int balance(Node<T> *node) { return height(node->right) - height(node->left); } 
+    // Consultar todas as pessoas cujo nome comece com uma string informada pelo
+    // usuário e exibir na tela todos os dados dessas pessoas na forma de lista.
 
     Node<T>* minimum(Node<T> *node) {
         Node<T> *aux = root;
@@ -97,7 +109,7 @@ private:
         return aux;
     }
 
-    Node<T>* sucessor(Node<T> *node) {
+    Node<T>* sucessor(Node<T> *node) const {
         if (node == nullptr) { return nullptr; } // se o nó não existir, não tem sucessor 
 
         if (node->right != nullptr) {
@@ -118,7 +130,7 @@ private:
         return aux;
     }
 
-    Node<T>* predecessor(Node<T> *node) {
+    Node<T>* predecessor(Node<T> *node) const{
         // função oposta a função anterior
         if (node == nullptr) { return nullptr; } // se o nó não existir
     
@@ -165,16 +177,18 @@ private:
     Node<T>* add(Node<T> *p, T key, Pessoa *pessoa) {
         if(p == nullptr)
             return new Node<T>(key, pessoa);
-        if(key == p->key) 
-            return p;
         if(key < p->key)
             p->left = add(p->left, key, pessoa);
-        else 
+        else if(key > p->key) {
             p->right = add(p->right, key, pessoa);
+        }
+        else 
+            p->sameKey.push_back(pessoa);
         
         p = fixup_node(p, key);
 
         return p;
+        
     }
 
     Node<T>* fixup_node(Node<T> *p, T key) {
