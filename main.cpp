@@ -76,7 +76,7 @@ int main() {
     
     //Cpf.searchCpf(Cpf, "607.941.973-45");
     
-    Nome.searchName(Nome, "Amanda");
+    Nome.searchName(Nome, "J");
 
     /*cout << "Arvore de Nomes: " << endl;
     Nome.bshow();
