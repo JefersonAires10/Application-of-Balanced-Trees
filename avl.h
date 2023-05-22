@@ -47,41 +47,40 @@ public:
         }
     }
 
-    void searchName(const avl_tree<T>& arvoreNome, T key) {
-        Node<T>* nodeNome = this->root;
+    void searchName(const avl_tree<T>& arvoreNome, const T& key) {
+        searchNameHelper(arvoreNome.root, key);
+    }
+
+    void searchNameHelper(const Node<T>* nodeNome, const T& key) {
         if (nodeNome == nullptr) {
             return;
         }
-        if (nodeNome != nullptr) {
-            if (nodeNome->key.compare(0, key.length(), key) == 0) {
-                std::cout << nodeNome->key << std::endl;
-                if (nodeNome->sameKey.size() > 0) {
-                    for (int i = 0; i < nodeNome->sameKey.size(); i++) {
-                        Pessoa *pessoa = nodeNome->sameKey[i];
-                        std::cout << "CPF: " << nodeNome->sameKey[i]->getCpf() << std::endl;
-                        std::cout << "Nome: " << pessoa->getNome() << std::endl;
-                        std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
-                    }
+
+        if (nodeNome->key.compare(0, key.length(), key) == 0) {
+            // O prefixo das strings são iguais
+            Pessoa *pessoa = nodeNome->pessoa;
+            std::cout << nodeNome->key << std::endl;
+            std::cout << "Nome: " << pessoa->getNome() << std::endl;
+            std::cout << "CPF: " << pessoa->getCpf() << std::endl;
+            std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
+
+            if (!nodeNome->sameKey.empty()) {
+                for (const auto& pessoa : nodeNome->sameKey) {
+                    std::cout << "CPF: " << pessoa->getCpf() << std::endl;
+                    std::cout << "Nome: " << pessoa->getNome() << std::endl;
+                    std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
                 }
             }
-
-            if (nodeNome->left != nullptr && key[0] <= nodeNome->left->key[0]) {
-                searchName(arvoreNome, nodeNome->left->key);
-            }
-            
-            else if (nodeNome->right != nullptr && key[0] >= nodeNome->right->key[0]) {
-                searchName(arvoreNome, nodeNome->right->key);
-            }
-            else {
-                searchName(arvoreNome, nodeNome->left->key);
-                searchName(arvoreNome, nodeNome->right->key);
-            }
         }
-        else {
-            cout << "Nome não encontrado!" << endl;
+        if (key[0] <= nodeNome->key[0] && nodeNome->left != nullptr) {
+            searchNameHelper(nodeNome->left, key);
+        }
+        
+        if (key[0] >= nodeNome->key[0] && nodeNome->right != nullptr) {
+            searchNameHelper(nodeNome->right, key);
         }
     }
-
+    
 private:
     Node<T> *root {nullptr};            
 
