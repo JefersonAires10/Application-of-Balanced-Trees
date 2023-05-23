@@ -43,13 +43,23 @@ public:
             cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
         }
         else {
-            cout << "CPF não encontrado!" << endl;
+            cout << "O Cpf informado é inexistente!" << endl;
         }
     }
 
     void searchName(const avl_tree<T>& arvoreNome, const T& key) {
         searchNameHelper(arvoreNome.root, key);
     }
+
+    
+private:
+    Node<T> *root {nullptr};            
+
+    int height(Node<T> *node) { return (node == nullptr) ? 0 : node->height; }
+    
+    int balance(Node<T> *node) { return height(node->right) - height(node->left); } 
+    // Consultar todas as pessoas cujo nome comece com uma string informada pelo
+    // usuário e exibir na tela todos os dados dessas pessoas na forma de lista.
 
     void searchNameHelper(const Node<T>* nodeNome, const T& key) {
         if (nodeNome == nullptr) {
@@ -63,12 +73,14 @@ public:
             std::cout << "Nome: " << pessoa->getNome() << std::endl;
             std::cout << "CPF: " << pessoa->getCpf() << std::endl;
             std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
+            cout << endl;
 
             if (!nodeNome->sameKey.empty()) {
                 for (const auto& pessoa : nodeNome->sameKey) {
                     std::cout << "CPF: " << pessoa->getCpf() << std::endl;
                     std::cout << "Nome: " << pessoa->getNome() << std::endl;
                     std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
+                    cout << endl;
                 }
             }
         }
@@ -80,15 +92,6 @@ public:
             searchNameHelper(nodeNome->right, key);
         }
     }
-    
-private:
-    Node<T> *root {nullptr};            
-
-    int height(Node<T> *node) { return (node == nullptr) ? 0 : node->height; }
-    
-    int balance(Node<T> *node) { return height(node->right) - height(node->left); } 
-    // Consultar todas as pessoas cujo nome comece com uma string informada pelo
-    // usuário e exibir na tela todos os dados dessas pessoas na forma de lista.
 
     Node<T>* minimum(Node<T> *node) {
         Node<T> *aux = root;
