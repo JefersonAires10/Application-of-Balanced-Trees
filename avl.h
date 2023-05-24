@@ -25,13 +25,24 @@ public:
     void bshow() const { bshow(root, ""); }
     ~avl_tree() { clear(); }
 
-    void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }                                 // O(lg n)
+    void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }         // O(lg n)
     void clear() { root = clear(root); }                                          // O(n)
     void remove(T key) { root = remove(root,key); }                            // O(lg n)
     void predecessor(T key) { predecessor(root, key); }                        // O(lg n)
     void sucessor(T key) { sucessor(root, key); }                              // O(lg n)
 
     Node<T>* search(T key) { return search(root, key); }                          // O(lg n)
+
+    void exibirCidade(const avl_tree<T>& arvoreNome, T key) {
+        Node<T> *nodeNome = search(key);
+        if (nodeNome != nullptr) {
+            Pessoa *pessoa = nodeNome->pessoa;
+            cout << "A(o) " << nodeNome->key << " é de " << pessoa->getCidade() << endl;
+        }
+        else {
+            cout << "O nome informado é inexistente!" << endl;
+        }
+    }
     
     // Consultar uma única pessoa pelo seu CPF e exibir seus dados na tela
     void searchCpf(const avl_tree<T>& arvoreCpf, T key) {
