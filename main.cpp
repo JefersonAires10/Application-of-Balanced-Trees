@@ -42,17 +42,18 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
         ss2 >> ano;
         Date dataDeNascimento(mes, dia, ano);
 
-        Pessoa pessoa(cpf, nome + " " + sobrenome, dataDeNascimento);
+        Pessoa pessoa(cpf, nome + " " + sobrenome, dataDeNascimento, cidade);
         pessoas.push_back(pessoa);
 
     }
 }
 
-void preencherArvores(avl_tree<string> &Cpf, avl_tree<string> &Nome, avl_tree<Date> &data_nascimento, vector<Pessoa> &pessoas) {
+void preencherArvores(avl_tree<string> &Cpf, avl_tree<string> &Nome, avl_tree<Date> &data_nascimento, avl_tree<string> &Cidade, vector<Pessoa> &pessoas) {
     for (int i = 0; i < pessoas.size(); i++) {
         Cpf.add(pessoas[i].getCpf(), &pessoas[i]);
         Nome.add(pessoas[i].getNome(), &pessoas[i]);
         data_nascimento.add(pessoas[i].getDataNascimento(), &pessoas[i]);
+        Cidade.add(pessoas[i].getCidade(), &pessoas[i]);
     }
 }
 
@@ -67,8 +68,9 @@ int main() {
     avl_tree<string> Cpf;
     avl_tree<string> Nome;
     avl_tree<Date> data_nascimento;
+    avl_tree<string> Cidade;
 
-    preencherArvores(Cpf, Nome, data_nascimento, pessoas);
+    preencherArvores(Cpf, Nome, data_nascimento, Cidade, pessoas);
 
     while (true) {
         int op;
@@ -152,7 +154,66 @@ int main() {
 
         else if (op == 2) {
             system("cls || clear");
-            menuOpAdicionais();
+            while (true) {
+                menuOpAdicionais();
+                int opcao;
+                cout << "Digite a opção desejada: ";
+                cin >> opcao;
+                if (opcao == 1) {
+                    system("cls || clear");
+                    menuExibirArvores();
+                    int opcao2;
+                    cout << "Qual árvore deseja exibir?: ";
+                    cin >> opcao2;
+                    if (opcao2 == 1) {
+                        system("cls || clear");
+                        Cpf.bshow();
+                    }
+                    else if (opcao2 == 2) {
+                        system("cls || clear");
+                        Nome.bshow();
+                    }
+                    else if (opcao2 == 3) {
+                        system("cls || clear");
+                        data_nascimento.bshow();
+                    }
+                    else if (opcao2 == 4) {
+                        system("cls || clear");
+                        Cidade.bshow();
+                    }
+                    else if (opcao2 == 5) {
+                        system("cls || clear");
+                        break;
+                    }
+                    else {
+                        cout << endl;
+                        system("cls || clear");
+                        cout << "Opção inválida, digite uma opção válida." << endl;
+                        cout << endl;
+                    }
+                }
+                else if (opcao == 2) {
+                    cout << "Digite o Nome da pessoa que deseja saber sua cidade: ";
+                    string nome;
+                    cin.ignore();
+                    getline(cin, nome);
+                    system("cls || clear");
+                    cout << "Busca realizada, segue o retorno da operação: " << endl;
+                    cout << endl;
+                    Nome.exibirCidade(Nome, nome);
+                    cout << endl;
+                }
+                else if (opcao == 3) {
+                    system("cls || clear");
+                    break;
+                }
+                else {
+                    cout << endl;
+                    system("cls || clear");
+                    cout << "Opção inválida, digite uma opção válida." << endl;
+                    cout << endl;
+                }
+            }
 
         }
 
