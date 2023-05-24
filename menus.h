@@ -67,7 +67,9 @@ void menuExibirArvores() {
     std::cout << " ┃                                           ┃ " << std::endl;
     std::cout << " ┃         3. Exibir Árvore de Datas         ┃ " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
-    std::cout << " ┃         4. Voltar                         ┃ " << std::endl;
+    std::cout << " ┃         4. Exibir Árvores de Cidades      ┃ " << std::endl;    
+    std::cout << " ┃                                           ┃ " << std::endl;
+    std::cout << " ┃         5. Voltar                         ┃ " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
 }
