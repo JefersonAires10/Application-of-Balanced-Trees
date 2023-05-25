@@ -78,6 +78,7 @@ int main() {
         cout << "Digite a opção desejada: ";
         cin >> op;
 
+    
         if (op == 1) {
             system("cls || clear");
             while (true) {
@@ -99,12 +100,21 @@ int main() {
                         cout << endl;
                     }
                     else {
-                        cout << endl;
-                        system("cls || clear");
-                        cout << "O Cpf informado é inválido, digite uma string no formato: 000.000.000-00" << endl;
-                        cout << endl;                        
+                        try {
+                            system("cls");
+                            cout << "╭――――――――――――――――――――――――――――——————————————————————————————————————————————————————―╮" << endl;
+                            cout << "│                                                                                   │"<< endl;
+                            cout << "│    O Cpf informado é inválido, digite uma string no formato: 000.000.000-00       │" << endl;
+                            cout << "│                                                                                   │"<< endl;
+                            cout << "╰――――――――――――――――――――――――――――——————————————————————————————————————————————————————―╯" << endl; 
+                            cout << endl;
+                        }
+                        catch (const char *msg) {
+                            cerr << msg << endl;
+                        }
                     }
                 }
+
                 else if (opcao == 2) {
                     cout << "Se você procura alguém específico, digite o nome completo desta pessoa: " << endl;
                     system("pause");
@@ -115,7 +125,7 @@ int main() {
                     system("cls || clear");
                     Nome.searchName(Nome, nome);
                 }
-                /*else if (opcao == 3) {
+                else if (opcao == 3) {
                     cout << "Digite a data de nascimento da pessoa que você procura: ";
                     string data;
                     cin >> data;
@@ -138,16 +148,24 @@ int main() {
                         cout << "A data informada é inválida, digite uma string no formato: dd/mm/aaaa" << endl;
                         cout << endl;
                     }
-                }*/
+                }
                 else if (opcao == 4) {
                     system("cls || clear");
                     break;
                 }
                 else {
-                    cout << endl;
-                    system("cls || clear");
-                    cout << "Opção inválida, digite uma opção válida." << endl;
-                    cout << endl;
+                    try {
+                        system("cls");
+                        cout << "╭――――――――――――――――――――――――――――——————————————————————————―╮" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "│    Opção inválida, digite uma opção entre 1 e 4       │" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "╰――――――――――――――――――――――――――――——————————————————————————―╯" << endl; 
+                        cout << endl;
+                    }
+                    catch (const char *msg) {
+                        cerr << msg << endl;
+                    }
                 }
             }
         }
@@ -221,6 +239,20 @@ int main() {
             system("cls || clear");
             menuEncerramento();
             break;
-        }        
+        }
+        else {
+            try {
+                system("cls");
+                cout << "╭――――――――――――――――――――――――――――——————————————————————————————―╮" << endl;
+                cout << "│                                                           │"<< endl;
+                cout << "│    Opção inválida, escolha entre as opções do menu.       │" << endl;
+                cout << "│                                                           │"<< endl;
+                cout << "╰―――――—————————————————————————————————————————————————————―╯" << endl; 
+                cout << endl;
+            }
+            catch (const char *msg) {
+                cerr << msg << endl;
+            }
+        }
     }
 }
