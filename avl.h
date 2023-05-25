@@ -62,6 +62,9 @@ public:
         searchNameHelper(arvoreNome.root, key);
     }
 
+    void searchDate(const avl_tree<T>& arvoreData, T& dataInicial, T& dataFinal) {
+        searchDateHelper(arvoreData.root, dataInicial, dataFinal);
+    }
     
 private:
     Node<T> *root {nullptr};            
@@ -101,6 +104,30 @@ private:
         
         if (key[0] >= nodeNome->key[0] && nodeNome->right != nullptr) {
             searchNameHelper(nodeNome->right, key);
+        }
+    }
+
+    void searchDateHelper(const Node<T>* nodeDate, T& dataInicial, T& dataFinal) {
+        if (nodeDate == nullptr || aux->key > dataFinal) {
+            return;
+        }
+        if (aux->left != nullptr && (maximum(aux->left)->key) >= dataInicial) {
+            searchDateHelper(aux->left, dataInicial, dataFinal);
+        }
+        if (aux->key >= dataInicial && aux->key <= dataFinal) {
+            Pessoa *pessoa = aux->pessoa;
+            cout << aux->key << endl;
+            if (!aux->sameKey.empty()) {
+                for (const auto& pessoa : nodeNome->sameKey) {
+                    cout << "CPF: " << pessoa->getCpf() << endl;
+                    cout << "Nome: " << pessoa->getNome() << endl;
+                    cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
+                    cout << endl;
+                }
+            }
+        }
+        if (aux->right != nullptr && (minimum(aux->right)->key) <= dataFinal) {
+            searchDateHelper(aux->right, dataInicial, dataFinal);
         }
     }
 
