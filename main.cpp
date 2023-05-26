@@ -126,29 +126,18 @@ int main() {
                     Nome.searchName(Nome, nome);
                 }
                 else if (opcao == 3) {
-                    cout << "Digite a data de nascimento da pessoa que você procura: ";
-                    string data;
-                    cin >> data;
-                    regex dataRegex(R"(\d{2}\/\d{2}\/\d{4})");
-                    if (regex_match(data, dataRegex)) {
-                        stringstream ss(data);
-                        int dia, mes, ano;
-                        ss >> dia;
-                        ss.ignore(1);
-                        ss >> mes;
-                        ss.ignore(1);
-                        ss >> ano;
-                        Date dataDeNascimento(mes, dia, ano);
-                        system("cls || clear");
-                        data_nascimento.searchDate(data_nascimento, dataDeNascimento);
-                    }
-                    else {
-                        cout << endl;
-                        system("cls || clear");
-                        cout << "A data informada é inválida, digite uma string no formato: dd/mm/aaaa" << endl;
-                        cout << endl;
-                    }
+                    Date dataInicio;
+                    Date dataFim;
+                    cout << "Digite a data de início da busca no formato mm dd aaaa: ";
+                    cin >> dataInicio.mes >> dataInicio.dia >> dataInicio.ano;
+                    cout << "Digite a data de fim da busca no formato mm dd aaaa: ";
+                    cin >> dataFim.mes >> dataFim.dia >> dataFim.ano;
+                    cout << endl;
+                    
+                    system("cls || clear");
+                    data_nascimento.searchDate(data_nascimento, dataInicio, dataFim);
                 }
+
                 else if (opcao == 4) {
                     system("cls || clear");
                     break;
