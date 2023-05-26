@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <regex> 
 
 struct Date
 {
@@ -143,6 +144,8 @@ struct Date
         os << data.mes << "/" << data.dia << "/" << data.ano;
         return os;
     }
+       
+
     
 };
 #endif // DATE_H
