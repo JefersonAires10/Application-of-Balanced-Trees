@@ -13,7 +13,9 @@ template<typename T>
 class avl_tree {
 public:
     avl_tree() = default;
+    
     avl_tree(const avl_tree& t); 
+    
     avl_tree& operator=(const avl_tree& t) {
         if(this != &t) {
             clear();
@@ -21,17 +23,16 @@ public:
         }
         return *this;
     } 
-    int height() const { return root->height; }
+    
     void bshow() const { bshow(root, ""); }
+
     ~avl_tree() { clear(); }
 
-    void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }         // O(lg n)
-    void clear() { root = clear(root); }                                          // O(n)
-    void remove(T key) { root = remove(root,key); }                            // O(lg n)
-    void predecessor(T key) { predecessor(root, key); }                        // O(lg n)
-    void sucessor(T key) { sucessor(root, key); }                              // O(lg n)
+    void add(T key, Pessoa *pessoa) { root = add(root, key, pessoa); }    
 
-    Node<T>* search(T key) { return search(root, key); }                          // O(lg n)
+    void clear() { root = clear(root); }                           
+
+    Node<T>* search(T key) { return search(root, key); }                          
 
     void exibirCidade(const avl_tree<T>& arvoreNome, T key) {
         Node<T> *nodeNome = search(key);
@@ -62,7 +63,7 @@ public:
         searchNameHelper(arvoreNome.root, key);
     }
 
-    void searchDate(const avl_tree<T>& arvoreData, T& dataInicial, T& dataFinal) {
+    void searchDate(const avl_tree<T>& arvoreData, const T& dataInicial, const T& dataFinal) {
         searchDateHelper(arvoreData.root, dataInicial, dataFinal);
     }
     
@@ -107,7 +108,9 @@ private:
         }
     }
 
-    void searchDateHelper(const Node<T>* nodeDate, T& dataInicial, T& dataFinal) {
+    void searchDateHelper(Node<T>* nodeDate, const T& dataInicial, const T& dataFinal) {
+        
+        Node<T>* aux = nodeDate;
         if (nodeDate == nullptr || aux->key > dataFinal) {
             return;
         }
@@ -115,20 +118,20 @@ private:
             searchDateHelper(aux->left, dataInicial, dataFinal);
         }
         if (aux->key >= dataInicial && aux->key <= dataFinal) {
+            /*715.379.468-97,Luis,Sousa,03/15/1946,Vitória*/
             Pessoa *pessoa = aux->pessoa;
-            cout << aux->key << endl;
+            cout << pessoa->getCpf() << ", " << pessoa->getNome()  << ", " << pessoa->getDataNascimento() << ", " << pessoa->getCidade() << endl;  
+
             if (!aux->sameKey.empty()) {
-                for (const auto& pessoa : nodeNome->sameKey) {
-                    cout << "CPF: " << pessoa->getCpf() << endl;
-                    cout << "Nome: " << pessoa->getNome() << endl;
-                    cout << "Data de nascimento: " << pessoa->getDataNascimento() << endl;
-                    cout << endl;
+                for (const auto& pessoa : nodeDate->sameKey) {
+                    cout << pessoa->getCpf() << ", " << pessoa->getNome()  << ", " << pessoa->getDataNascimento() << ", " << pessoa->getCidade() << endl;  
                 }
             }
         }
         if (aux->right != nullptr && (minimum(aux->right)->key) <= dataFinal) {
             searchDateHelper(aux->right, dataInicial, dataFinal);
         }
+        
     }
 
     Node<T>* minimum(Node<T> *node) {
@@ -145,42 +148,6 @@ private:
         while (aux != nullptr && aux->right != nullptr) {
             if (aux->right == nullptr) { return aux; }
             else { aux = aux->right; }
-        }
-        return aux;
-    }
-
-    Node<T>* sucessor(Node<T> *node) const {
-        if (node == nullptr) { return nullptr; } // se o nó não existir, não tem sucessor 
-
-        if (node->right != nullptr) {
-            Node<T> *minNode = node->right;
-            while (minNode != nullptr && minNode->left != nullptr) {
-                if (minNode->left == nullptr) { return minNode; }
-                else { minNode = minNode->left; }
-            }
-        return minNode;
-        }
-        Node<T> *auxNode = root; // para percorrer a árvore
-        Node<T> *aux = nullptr; // nó auxiliar
-        while ( auxNode != node ) {
-            // encontrando o menor antes
-            if (auxNode->key < node->key) { auxNode = auxNode->right; }
-            else { aux = auxNode; auxNode = auxNode->left; }
-        }
-        return aux;
-    }
-
-    Node<T>* predecessor(Node<T> *node) const{
-        // função oposta a função anterior
-        if (node == nullptr) { return nullptr; } // se o nó não existir
-    
-        // mesma lógica da função anterior, buscando o antecessor
-        Node<T> *auxNode = root; // para percorrer a árvore
-        Node<T> *aux = nullptr; // nó auxiliar
-        while ( auxNode != node ) {
-            // encontrando o menor antes
-            if (auxNode->key > node->key) { auxNode = auxNode->left; }
-            else { aux = auxNode; auxNode = auxNode->right; }
         }
         return aux;
     }
@@ -284,62 +251,6 @@ private:
             bshow(node->left, heranca + "l");
     }
 
-    Node<T>* remove(Node<T> *node, T key) {
-        if(node == nullptr) // node nao encontrado
-            return nullptr; /*L\pauseL*/
-        if(key < node->key) 
-            node->left = remove(node->left, key);
-        else if(key > node->key)
-            node->right = remove(node->right, key); /*L\pauseL*/
-        // encontramos no node
-        else if(node->right == nullptr) { // sem filho direito
-            Node<T> *child = node->left;
-            delete node;
-            return child;
-        }
-        else // tem filho direito: troca pelo sucessor
-            node->right = remove_successor(node, node->right); /*L\pauseL*/
-        
-        // Atualiza a altura do node e regula o node
-        node = fixup_deletion(node); 
-        return node;
-    }
-
-    Node<T>* remove_successor(Node<T> *root, Node<T> *node) {
-        if(node->left != nullptr)
-            node->left = remove_successor(root, node->left);
-        else {
-            root->key = node->key;
-            Node<T> *aux = node->right;
-            delete node;
-            return aux;
-        }
-        // Atualiza a altura do node e regula o node
-        node = fixup_deletion(node);
-        return node;
-    }
-
-    Node<T>* fixup_deletion(Node<T> *node) {
-        node->height = 1 + max(height(node->left),height(node->right));
-
-        int bal = balance(node);
-
-        // node pode estar desregulado, ha 4 casos a considerar
-        if(bal > 1 && balance(node->right) >= 0) {
-            return leftRotation(node);
-        }
-        else if(bal > 1 && balance(node->right) < 0) {
-            node->right = rightRotation(node->right);
-            return leftRotation(node);
-        }
-        else if(bal < -1 && balance(node->left) <= 0) {
-            return rightRotation(node);
-        }
-        else if(bal < -1 && balance(node->left) > 0) { 
-            node->left = leftRotation(node->left);
-            return rightRotation(node);
-        }
-        return node;
-    }
 };
+
 #endif // AVL_TREE_H
