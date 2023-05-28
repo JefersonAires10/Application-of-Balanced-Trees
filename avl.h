@@ -254,7 +254,7 @@ private:
         if (aux->right != nullptr && (minimum(aux->right)->key) <= dataFinal) {
             searchDateHelper(aux->right, dataInicial, dataFinal);
         }
-        else 
+    
     }
 
     /**
