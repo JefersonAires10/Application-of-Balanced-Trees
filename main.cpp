@@ -27,12 +27,6 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
         getline(ss, data, ',');
         getline(ss, cidade, ',');
 
-        /*for (int i = 0; i < cpf.size(); i++) {
-            if (cpf[i] == '.' || cpf[i] == '-') {
-                cpf.erase(i--, 1);
-            }
-        }*/
-
         stringstream ss2(data);
         int dia, mes, ano;
         ss2 >> mes;
@@ -47,7 +41,11 @@ void readFile(vector<Pessoa> &pessoas, string filename) {
 
     }
 }
-
+/**
+ * @brief Função que preenche as árvores com os dados do arquivo csv
+ * @param referencia para a árvore de CPF, Nome, Data de Nascimento e Cidade e o vector de pessoas
+ * 
+*/
 void preencherArvores(avl_tree<string> &Cpf, avl_tree<string> &Nome, avl_tree<Date> &data_nascimento, avl_tree<string> &Cidade, vector<Pessoa> &pessoas) {
     for (int i = 0; i < pessoas.size(); i++) {
         Cpf.add(pessoas[i].getCpf(), &pessoas[i]);
@@ -65,6 +63,7 @@ int main() {
     vector<Pessoa> pessoas;
     readFile(pessoas, "data.csv");
 
+    // Instancias das árvores
     avl_tree<string> Cpf;
     avl_tree<string> Nome;
     avl_tree<Date> data_nascimento;
@@ -123,13 +122,15 @@ int main() {
                     cin.ignore();
                     getline(cin, nome);
                     system("cls || clear");
-                    Nome.searchName(Nome, nome);
+                    Nome.searchName(Nome, nome); 
+
                 }
                 else if (opcao == 3) {
                     Date dataInicio;
                     Date dataFim;
                     cout << "Digite a data de início da busca no formato mm dd aaaa: ";
                     cin >> dataInicio.mes >> dataInicio.dia >> dataInicio.ano;
+                    
                     cout << "Digite a data de fim da busca no formato mm dd aaaa: ";
                     cin >> dataFim.mes >> dataFim.dia >> dataFim.ano;
                     cout << endl;
@@ -193,10 +194,18 @@ int main() {
                         break;
                     }
                     else {
+                        try {
+                        system("cls");
+                        cout << "╭――――――――――――――――――――――――――――——————————————————————————―╮" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "│    Opção inválida, digite uma opção entre 1 e 5       │" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "╰――――――――――――――――――――――――――――——————————————————————————―╯" << endl; 
                         cout << endl;
-                        system("cls || clear");
-                        cout << "Opção inválida, digite uma opção válida." << endl;
-                        cout << endl;
+                    }
+                    catch (const char *msg) {
+                        cerr << msg << endl;
+                    }
                     }
                 }
                 else if (opcao == 2) {
@@ -204,21 +213,45 @@ int main() {
                     string nome;
                     cin.ignore();
                     getline(cin, nome);
-                    system("cls || clear");
-                    cout << "Busca realizada, segue o retorno da operação: " << endl;
-                    cout << endl;
-                    Nome.exibirCidade(Nome, nome);
-                    cout << endl;
+                    if (nome == "") {
+                        system("cls || clear");
+                        cout << "Busca realizada, segue o retorno da operação: " << endl;
+                        cout << endl;
+                        Nome.exibirCidade(Nome, nome);
+                        cout << endl;
+                    }
+                    else {
+                        try {
+                        system("cls");
+                        cout << "╭――――――――――――――――――――――――――――——————―――――——————―――――——————―――――——————―――――———————————————————————―╮" << endl;
+                        cout << "│                                                                                                │"<< endl;
+                        cout << "│    Essa consulta não é por prefixo, portanto, digite o nome completo da pessoa que busca       │" << endl;
+                        cout << "│                                                                                                │"<< endl;
+                        cout << "╰―――――――――――――――――――――――――――——————―――――——————―――――——————―――――———――――――——————————————————————————―╯" << endl; 
+                        cout << endl;
+                        }
+                        catch (const char *msg) {
+                            cerr << msg << endl;
+                        }
+                    }
                 }
                 else if (opcao == 3) {
                     system("cls || clear");
                     break;
                 }
                 else {
-                    cout << endl;
-                    system("cls || clear");
-                    cout << "Opção inválida, digite uma opção válida." << endl;
-                    cout << endl;
+                    try {
+                        system("cls");
+                        cout << "╭――――――――――――――――――――――――――――——————————————————————————―╮" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "│    Opção inválida, digite uma opção entre 1 e 3       │" << endl;
+                        cout << "│                                                       │"<< endl;
+                        cout << "╰――――――――――――――――――――――――――――——————————————————————————―╯" << endl; 
+                        cout << endl;
+                    }
+                    catch (const char *msg) {
+                        cerr << msg << endl;
+                    }
                 }
             }
 
@@ -229,6 +262,7 @@ int main() {
             menuEncerramento();
             break;
         }
+    
         else {
             try {
                 system("cls");
