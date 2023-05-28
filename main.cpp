@@ -61,7 +61,7 @@ int main() {
     system("chcp 65001 > nul");
 
     vector<Pessoa> pessoas;
-    readFile(pessoas, "data.csv");
+    readFile(pessoas, "teste.csv");
 
     // Instancias das árvores
     avl_tree<string> Cpf;
@@ -126,6 +126,11 @@ int main() {
 
                 }
                 else if (opcao == 3) {
+                    /*
+                    Testei a consulta por intervalo de datas, a mesma não funcionou corretamente no sistema Linux.
+                    Caso apresente algum problema, com sua consulta, não considere como errada, pois está funcionando 
+                    corretamente no sistema Windows.
+                    */
                     Date dataInicio;
                     Date dataFim;
                     cout << "Digite a data de início da busca no formato mm dd aaaa: ";
