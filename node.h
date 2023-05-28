@@ -17,6 +17,10 @@ struct Node {
     std::vector<Pessoa*> chavesIguais;     
     
     // Construtor
+    /**
+     * @brief Construtor da classe Node
+     * @param T key, Node<T> *left, Node<T> *right, int height, Pessoa *pessoa
+    */
     Node (T key, Node<T> *left = nullptr, Node<T> *right = nullptr, int height = 1, Pessoa *pessoa = nullptr)
         : key(key), height(height), left(left), right(right), pessoa(pessoa)
     {
@@ -31,7 +35,10 @@ struct Node {
     do nó, mas o construtor do nó não estava esperando um ponteiro para pessoa, e sim um objeto do tipo pessoa.
     Com essa sobrecarga, eu consigo passar um ponteiro para pessoa no construtor do nó e usar a minha add.
     */
-
+    /**
+     * @brief Construtor sobrecarregado da classe Node
+     * @param T key, Pessoa *pessoa
+    */
     Node (T key, Pessoa *pessoa)
         : key(key), height(1), left(nullptr), right(nullptr), pessoa(pessoa)
     {
