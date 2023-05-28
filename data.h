@@ -4,18 +4,15 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <regex> 
 
-struct Date
-{
+struct Date {
     int dia;
     int mes;
     int ano;
 
     Date() {}
 
-    Date(int dia, int mes, int ano)
-    {
+    Date(int dia, int mes, int ano) {
         this->dia = dia;
         this->mes = mes;
         this->ano = ano;
@@ -33,100 +30,77 @@ struct Date
 
     void setAno(int ano) { this->ano = ano; }
 
-    bool operator<(Date data)
-    {
-        if (this->getAno() < data.getAno())
-        {
+    bool operator<(Date data) {
+        if (this->getAno() < data.getAno()) { 
+            return true; 
+        }
+
+        else if (this->getAno() == data.getAno()) {
+            if (this->getMes() < data.getMes()) { 
+                return true; 
+            }
+
+            else if (this->getMes() == data.getMes()) {
+                if (this->getDia() < data.getDia()) { 
+                    return true; 
+                }
+                else { 
+                    return false; 
+                }
+            }
+            else { 
+                return false; 
+            }
+        
+        }
+        else { 
+            return false; 
+        }
+    }
+
+    bool operator>(Date data) {
+        if (this->getAno() > data.getAno()) {
             return true;
         }
 
-        else if (this->getAno() == data.getAno())
-        {
-
-            if (this->getMes() < data.getMes())
-            {
+        else if (this->getAno() == data.getAno()) {
+            if (this->getMes() > data.getMes()) {
                 return true;
             }
 
-            else if (this->getMes() == data.getMes())
-            {
-                if (this->getDia() < data.getDia())
-                {
+            else if (this->getMes() == data.getMes()) {
+                if (this->getDia() > data.getDia()) {
                     return true;
                 }
-                else
-                {
+                else {
                     return false;
                 }
             }
-            else
-            {
+            else {
                 return false;
             }
+            
         }
-        else
-        {
+        else {
+            return false;
+        }
+       
+    }
+
+    bool operator==(Date data) { 
+        if (this->getAno() == data.getAno() && this->getMes() == data.getMes() && this->getDia() == data.getDia()) {
+            return true;
+        }
+        else {
             return false;
         }
     }
 
-    bool operator>(Date data)
-    {
-        if (this->getAno() > data.getAno())
-        {
+    bool operator!=(Date data) {
+        if (this->getAno() != data.getAno() || this->getMes() != data.getMes() || this->getDia() != data.getDia()) {
             return true;
         }
-
-        else if (this->getAno() == data.getAno())
-        {
-            if (this->getMes() > data.getMes())
-            {
-                return true;
-            }
-
-            else if (this->getMes() == data.getMes())
-            {
-                if (this->getDia() > data.getDia())
-                {
-                    return true;
-                }
-
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool operator==(Date data)
-    {
-        if (this->getAno() == data.getAno() && this->getMes() == data.getMes() && this->getDia() == data.getDia())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool operator!=(Date data)
-    {
-        if (this->getAno() != data.getAno() || this->getMes() != data.getMes() || this->getDia() != data.getDia())
-        {
-            return true;
-        }
-        else
-        {
+        else {
             return false;
         }
     }
@@ -144,8 +118,6 @@ struct Date
         os << data.mes << "/" << data.dia << "/" << data.ano;
         return os;
     }
-       
-
     
 };
 #endif // DATE_H
