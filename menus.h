@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+/**
+ * @brief Menu inicial do programa
+*/
 void menuInicial() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
@@ -19,7 +22,9 @@ void menuInicial() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
 
 }
-
+/**
+ * @brief Menu de consultas do programa
+*/
 void menuPrincipal() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
@@ -37,7 +42,9 @@ void menuPrincipal() {
     std::cout << " ┃                                           ┃ " << std::endl;
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
 }
-
+/**
+ * @brief Menu de opções adicionais do programa
+*/
 void menuOpAdicionais() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
@@ -53,7 +60,9 @@ void menuOpAdicionais() {
     std::cout << " ┃                                           ┃ " << std::endl;
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
 }
-
+/**
+ * @brief Menu de exibição de árvores do programa
+*/
 void menuExibirArvores() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
@@ -73,7 +82,9 @@ void menuExibirArvores() {
     std::cout << " ┃                                           ┃ " << std::endl;
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
 }
-
+/**
+ * @brief Menu de enecerramento do programa
+*/
 void menuEncerramento() {
     std::cout << " »»━━━━━━━━━━━━━━━◦◦◦◦◦◦◦◦◦◦━━━━━━━━━━━━━━━━«« " << std::endl;
     std::cout << " ┃                                           ┃ " << std::endl;
