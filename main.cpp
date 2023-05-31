@@ -218,27 +218,14 @@ int main() {
                     string nome;
                     cin.ignore();
                     getline(cin, nome);
-                    if (nome == "") {
-                        system("cls || clear");
-                        cout << "Busca realizada, segue o retorno da operação: " << endl;
-                        cout << endl;
-                        Nome.exibirCidade(Nome, nome);
-                        cout << endl;
-                    }
-                    else {
-                        try {
-                        system("cls");
-                        cout << "╭――――――――――――――――――――――――――――——————―――――——————―――――——————―――――——————―――――———————————————————————―╮" << endl;
-                        cout << "│                                                                                                │"<< endl;
-                        cout << "│    Essa consulta não é por prefixo, portanto, digite o nome completo da pessoa que busca       │" << endl;
-                        cout << "│                                                                                                │"<< endl;
-                        cout << "╰―――――――――――――――――――――――――――——————―――――——————―――――——————―――――———――――――——————————————————————————―╯" << endl; 
-                        cout << endl;
-                        }
-                        catch (const char *msg) {
-                            cerr << msg << endl;
-                        }
-                    }
+                
+                    system("cls || clear");
+                    cout << "Busca realizada, segue o retorno da operação: " << endl;
+                    cout << endl;
+                    Nome.exibirCidade(Nome, nome);
+                    cout << endl;
+                
+                    
                 }
                 else if (opcao == 3) {
                     system("cls || clear");
