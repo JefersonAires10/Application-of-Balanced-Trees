@@ -83,6 +83,7 @@ public:
             std::cout << "CPF: " << nodeCpf->key << std::endl; 
             std::cout << "Nome: " << pessoa->getNome() << std::endl;
             std::cout << "Data de nascimento: " << pessoa->getDataNascimento() << std::endl;
+        
         }
         else {
             std::cout << "O Cpf informado é inexistente!" << std::endl; // Se o nó não existir
@@ -128,7 +129,7 @@ private:
     */
     void searchNameHelper(const Node<T>* nodeNome, const T& key) {
         if (nodeNome == nullptr) { // Se o nó for nulo, retorna
-            return; // continue
+            return; 
         }
 
         /*
@@ -254,7 +255,6 @@ private:
         if (aux->right != nullptr && (minimum(aux->right)->key) <= dataFinal) {
             searchDateHelper(aux->right, dataInicial, dataFinal);
         }
-    
     }
 
     /**
